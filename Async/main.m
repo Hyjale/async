@@ -63,6 +63,14 @@ int main(int argc, const char * argv[]) {
         [calculator start];
 
         NSLog(@"Calculated sum...");
+
+        __block NSNumber *sum = @0;
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply([nums count], queue, ^(size_t i){
+            sum = @([sum integerValue] + [nums[i] integerValue]);
+        });
+
+        NSLog(@"Sum: %@", sum);
     }
 
     return 0;
